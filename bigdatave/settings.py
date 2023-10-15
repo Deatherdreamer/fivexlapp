@@ -33,7 +33,7 @@ IS_HEROKU_APP = "DYNO" in os.environ and not "CI" in os.environ
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -116,7 +116,7 @@ WSGI_APPLICATION = "bigdatave.wsgi.application"
 # COINBASE_COMMERCE_API_KEY = "02376cd4-bd2b-4287-b30f-c1be9b621c76"
 KODEXPAY_API_KEY = 'b5f6aec2-9f97-4629-a30d-fa20ab28c2a3'
 
-LOCAL_DB = True
+LOCAL_DB = False
 
 if LOCAL_DB:
     DATABASES = {
@@ -130,10 +130,10 @@ else:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql_psycopg2",
-            "NAME": "d3qvb63v40cgc2",
-            "USER": "qxpumipbbiuqkh",
-            "PASSWORD": "fa08818cd52940336721500f6c2ba3f28cc5f89afa7d5c3fdde185d1c2f9a6fd",
-            "HOST": "ec2-107-21-67-46.compute-1.amazonaws.com",
+            "NAME": "df5tgjepe19phg",
+            "USER": "oqxdkzqpfxtfdm",
+            "PASSWORD": "28d16554d4d542db9cc1d2fbb7ea0d62e5b7163335cd66022c42b1c18fa5b8f3",
+            "HOST": "ec2-34-236-103-63.compute-1.amazonaws.com",
             "PORT": "5432",
         }
     }
