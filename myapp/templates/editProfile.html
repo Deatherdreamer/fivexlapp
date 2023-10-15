@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <!-- profile details -->
+    <div class="container rounded mt-5 mb-5">
+        <div class="row">
+            <div class="col-md border-right">
+                <form method="post" action="#" class="p-3 py-5">
+                    {% csrf_token %}
+
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">My Profile</h4>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <label class="labels">First Name</label>
+                            <input type="text" class="form-control" placeholder="name" value="{{profile.firstName}}"
+                                name="firstName">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="labels">Last Name</label>
+                            <input type="text" class="form-control" placeholder="surname" value="{{profile.lastName}}"
+                                name="lastName">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label class="labels">Email</label>
+                            <input type="text" class="form-control" placeholder="email" value="{{profile.user.email}}"
+                                name="email">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Date of Birth</label>
+                            <input type="date" class="form-control" placeholder="date of birth"
+                                value="{{ profile.dateOfBirth|date:'Y-m-d' }}" name="dateOfBirth">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Date Joined</label>
+                            <input type="date" class="form-control" placeholder="date joined"
+                                value="{{profile.dateJoined|date:'Y-m-d'}}" name="dateJoined" name="dateJoined">
+
+                        </div>
+
+                        <!-- ewallet -->
+                        <div class="col-md-12">
+                            <label class="labels">Your Wallet Address</label>
+                            <input type="text" class="form-control" placeholder="Wallet"
+                                value="{% if profile.ewallet %}{{profile.ewallet}}{% endif %}" name="ewallet">
+                        </div>
+
+                    </div>
+                    <div class="row mt-3">
+                        <!-- confirm changes and cancel buttons -->
+                        <div class="col-md-12">
+                            <button class="btn btn-primary" type="submit">Confirm Changes</button>
+                            <a href="{% url 'profile' %}" class="btn btn-danger">Cancel</a>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="col-md-6">
+                {% if messages %}
+                <div class="alert alert-danger">
+                    {% for message in messages %}
+                    {{ message }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

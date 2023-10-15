@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <main>
+        <div class="container-fluid px-4 py-5">
+
+            <div class="row">
+
+                <div class="col">
+                    <div class="card card-body mt-4">
+
+                        <div class="row mb-4">
+                            <h1 class="mt-4 display-4">New Payment</h1>
+
+                            <div class="col-md-4">
+                                <img
+                                    src="https://chart.apis.google.com/chart?cht=qr&chs=250x250&chl={{response.wallet}}&chld=H">
+
+                            </div>
+                            <div class="col-md" style="min-height: 100%;">
+                                <h4>Please, use the Wallet below or scan the QR code.</h4>
+                                <!-- show the wallet address in a readonly input -->
+                                <div class="input-group mb-3">
+                                    <input id="walletaddress" type="text" class="form-control" value="{{response.wallet}}" readonly>
+                                    <button class="btn btn-outline-secondary" type="button"
+                                        id="button-addon2" onclick="myFunction()">Copy</button>
+                                </div>
+
+
+                                <table class="table table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th>Transaction Amount</th>
+                                            <th>Currently Payed</th>
+                                        </tr>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <p class="lead fs-2  fw-bold">
+                                                    {{response.quantityPay}}<span class="fs-6">
+                                                        {{response.paymentToken}}</span></p>
+
+                                            </td>
+                                            <td>
+                                                {% if response.quantityReceived %}
+                                                <p class="lead fs-2 fw-bold">{{response.quantityReceived}}
+                                                    <span class="fs-6">{{response.paymentToken}}</span></p>
+                                                {% else %}
+                                                <p class="lead fs-2 fw-bold">0 <span class="fs-6">
+                                                        {{response.paymentToken}}</span></p>
+                                                {% endif %}
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <!-- badge to indicate response status -->
+                                <p class="lead text-center">Order Status</p>
+
+                                <div class="d-flex justify-content-center">
+
+                                    <span class="badge bg-success text-center fs-4">{{response.statusText}}</span>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                                <div class="col">
+                                    <a href="{% url 'deposits' %}" class="btn btn-danger btn-lg">Ok</a>
+                                </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+<script>
+    function myFunction() {
+        /* Get the text field */
+        var copyText = document.getElementById("walletaddress");
+
+        /* Select the text field */
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+        /* Copy the text inside the text field */
+        document.execCommand("copy");
+    }
+</script>
+{% endblock %}
+
+

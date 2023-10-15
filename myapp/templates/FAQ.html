@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<main>
+    <div class="container-fluid px-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-9 col-md-6">
+
+                <div class="card border-0 shadow mt-5">
+                    <div class="card-header border-0 bg-transparent text-center">
+                        <h3 class="">Frequently Asked Questions</h3>
+                    </div>
+                    <div class="card-body">
+                        
+
+                        <!-- Accordion without outline borders -->
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                            {% for faq in faqs %}
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-{{forloop.counter}}">
+                                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#flush-collapse{{forloop.counter}}" aria-expanded="false"
+                                        aria-controls="flush-collapse{{forloop.counter}}">
+                                        #{{forloop.counter}} {{ faq.question }}
+                                    </button>
+                                </h2>
+                                <div id="flush-collapse{{forloop.counter}}" class="accordion-collapse collapse"
+                                    aria-labelledby="flush-{{forloop.counter}}" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">{{ faq.answer }}</div>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

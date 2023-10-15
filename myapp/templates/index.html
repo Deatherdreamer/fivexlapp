@@ -1,0 +1,269 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Welcome {{user.profile|title}}!</h1>
+
+        <!-- <h1 class="mt-4">Dashboard</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol> -->
+
+        <!-- display warning if ewallet == null -->
+        {% if user.profile.ewallet == null %}
+        <div class="alert alert-warning border-0 shadow" role="alert">
+            <h4 class="alert-heading">Warning!</h4>
+            <p>You have not set your wallet address yet. Please set it <a href="{% url 'updateProfile' %}">here</a> to
+                receive your earnings.</p>
+        </div>
+        {% endif %}
+        <!-- end of display warning if ewallet == null -->
+
+        <div class="row">
+            
+            <div class="col-xl-6 col-md-6">
+                
+
+                <div class="card border-0 shadow mb-4">
+                    <div class="card-body">
+                        <button class="btn btn-sm stretched-link" onclick="copyReferralCode()">
+                            <i class="bi bi-clipboard"></i>
+                        </button>
+                        Your Referral Code: <span id="referralCode">{{ user.profile.referral_code }}</span>
+
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow mb-4">
+                    <div class="card-body">
+                        {% if user.profile.referred_by %}
+                        You were referred by: {{ user.profile.referred_by|title }}
+                        {% else %}
+                        You were not referred by anyone
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow mb-4">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div class="me-2">
+                                <a href="{% url 'newDeposit' %}" class="text-dark btn btn-outline-primary">New Deposit</a>
+                            </div>
+                            <div class="me-2">
+                                <a href="{% url 'newInvestment' %}" class="text-dark btn btn-outline-warning">New investment</a>
+                            </div>
+
+                            <div class="">
+                                <a href="{% url 'newWithdrawal' %}" class="text-dark btn btn-outline-success">New Withdrawal</a>
+                            </div>
+
+
+                        </div>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="col-xl-6 col-md-6 order-md-first">
+                <div class="card border-0 shadow">
+                    <div class="card-body">
+                        <div class="card card-body text-bg-dark">
+                            <div class="fs-2">
+                                Current Balance: ${{ user.profile.balance }}
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-xl-6 col-md-6">
+                                <div class="card bg-primary bg-opacity-25 mb-4 border border-primary border-4 border-top-0 border-end-0 border-bottom-0">
+                                    <div class="card-body">
+                                        <p class="fw-bold mb-0">Deposits</p>
+                                        <p class="text-end mb-0 fs-1 ">${{ request.user.profile.getTotalDeposits }}</p>       
+        
+                                    </div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-dark stretched-link" href="{% url 'deposits' %}">View
+                                            Details</a>
+                                        <div class="small text-dark"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-md-6">
+                                <div class="card bg-warning bg-opacity-25 mb-4 border border-warning border-4 border-top-0 border-end-0 border-bottom-0">
+                                    <div class="card-body">
+                                        <p class="fw-bold mb-0">Currently Invested</p>
+                                        <p class="text-end mb-0 fs-1 ">${{ request.user.profile.getTotalInvestments }}</p>
+        
+        
+                                    </div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-dark stretched-link" href="{% url 'investments' %}">View
+                                            Details</a>
+                                        <div class="small text-dark"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-md-6">
+                                <div class="card bg-success bg-opacity-25 mb-4 border border-success border-4 border-top-0 border-end-0 border-bottom-0">
+                                    <div class="card-body">
+                                        <p class="fw-bold mb-0">Earnings</p>
+                                        <p class="text-end mb-0 fs-1 ">${{ request.user.profile.getTotalEarnings }}</p>
+        
+        
+        
+                                    </div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-dark stretched-link" href="{% url 'earnings' %}">View Details</a>
+                                        <div class="small text-dark"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-md-6">
+                                <div class="card bg-danger bg-opacity-25 mb-4 border border-danger border-4 border-top-0 border-end-0 border-bottom-0">
+                                    <div class="card-body">
+                                        <p class="fw-bold mb-0">Referred Users</p>
+                                        <p class="text-end mb-0">users <span
+                                                class="fs-1  ">{{ request.user.profile.getReferredUsersCount }}</span></p>
+                                    </div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-dark stretched-link" href="{% url 'referrals' %}">View Details</a>
+                                        <div class="small text-dark"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        
+                </div>
+            </div>
+
+            
+            
+            
+        </div>
+
+
+
+
+        <!-- <div class="row">
+        
+            <div class="col">
+                <div class="card bg-ligth  mb-4">
+                    <div class="card-body">
+                        <button class="btn btn-sm" onclick="copyReferralCode()">
+                            <i class="bi bi-clipboard"></i>
+                        </button>
+                        Your Referral Code: <span id="referralCode">{{ user.profile.referral_code }}</span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="card bg-ligth  mb-4">
+                    <div class="card-body">
+                        {% if user.profile.referred_by %}
+                        You were referred by: {{ user.profile.referred_by|title }}
+                        {% else %}
+                        You were not referred by anyone
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="card card-body text-bg-dark">
+                    <div class="fs-2">
+                        Current Balance: ${{ user.profile.balance }}
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-primary text-white mb-4">
+                            <div class="card-body">
+                                <p class="fw-bold">Deposits</p>
+                                <p class="text-end fs-1">${{ request.user.profile.getTotalDeposits }}</p>
+
+
+                            </div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                <a class="small text-white stretched-link" href="{% url 'deposits' %}">View
+                                    Details</a>
+                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-warning text-white mb-4">
+                            <div class="card-body">
+                                <p class="fw-bold">Currently Invested</p>
+                                <p class="text-end fs-1">${{ request.user.profile.getTotalInvestments }}</p>
+
+
+                            </div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                <a class="small text-white stretched-link" href="{% url 'investments' %}">View
+                                    Details</a>
+                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-success text-white mb-4">
+                            <div class="card-body">
+                                <p class="fw-bold">Earnings</p>
+                                <p class="text-end fs-1">${{ request.user.profile.getTotalEarnings }}</p>
+
+
+
+                            </div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                <a class="small text-white stretched-link" href="{% url 'earnings' %}">View Details</a>
+                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-danger text-white mb-4">
+                            <div class="card-body">
+                                <p class="fw-bold">Referred Users</p>
+                                <p class="text-end">users <span
+                                        class="fs-1 ">{{ request.user.profile.getReferredUsersCount }}</span></p>
+                            </div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                <a class="small text-white stretched-link" href="{% url 'referrals' %}">View Details</a>
+                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div> -->
+
+
+
+    </div>
+</main>
+
+<script>
+    function copyReferralCode() {
+        var referralCode = document.getElementById("referralCode");
+        var range = document.createRange();
+        range.selectNode(referralCode);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        document.execCommand("copy");
+        window.getSelection().removeAllRanges();
+    }
+</script>
+
+
+{% endblock %}

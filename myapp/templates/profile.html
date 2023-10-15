@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+<!-- profile details -->
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-9">
+            <div class="card border-0 shadow mt-4">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center my-2">
+                        <h4 class="text-right card-title">My Profile</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="">
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label class="labels">First Name</label>
+                                <input type="text" class="form-control" placeholder="name" value="{{profile.firstName}}"
+                                    readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="labels">Last Name</label>
+                                <input type="text" class="form-control" placeholder="surname"
+                                    value="{{profile.lastName}}" readonly>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-12">
+                                <label class="labels">Email</label>
+                                <input type="text" class="form-control" placeholder="email"
+                                    value="{{profile.user.email}}" readonly>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label class="labels">Date of Birth</label>
+                                <input type="text" class="form-control" placeholder="date of birth"
+                                    value="{{ profile.dateOfBirth|date:'m/d/Y' }}" name="dateOfBirth" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="labels">Date Joined</label>
+                                <input type="text" class="form-control" placeholder="date joined"
+                                    value="{{profile.dateJoined|date:'m/d/Y'}}" name="dateJoined" readonly>
+
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+
+                            <div class="col-md-6">
+                                <label class="labels">Phone Number</label>
+                                <input type="text" class="form-control" placeholder="Phone Number"
+                                    value="{{ profile.phone }}" name="phone" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="labels">Country</label>
+                                <input type="text" class="form-control" placeholder="Country"
+                                    value="{{profile.country}}" name="country" readonly>
+
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+
+                            <!-- ewallet -->
+                            <div class="col-md-12">
+                                <label class="labels">E-Wallet</label>
+                                <input type="text" class="form-control" placeholder="ewallet"
+                                    value="{{profile.ewallet}}" readonly>
+                            </div>
+
+                        </div>
+
+
+
+
+
+                        <div class="row mt-3">
+                            <!-- edit profile -->
+                            <div class="col-md-12">
+                                <a href="{% url 'updateProfile' %}" class="btn btn-primary">Edit Profile</a>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <main>
+        <div class="container-fluid px-4">
+            <div class="row">
+                <h1 class="mt-4">My Investments</h1>
+                <div class="col-12 mt-4">
+                    <div class="d-flex">
+                        <div class="me-2">
+                            <a href="{% url 'newInvestment' %}" class="btn btn-warning">New Investment</a>
+                        </div>
+                        <div class="me-2">
+                            <a href="{% url 'index' %}" class="btn btn-outline-secondary">My Dashboard</a>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <div class="col-12 mt-4">
+                    <div class="row">
+                        <div class="col-md-5 pb-4">
+                            <div class="card bg-warning bg-opacity-25 mb-4 border border-warning border-4 border-top-0 border-end-0 border-bottom-0 h-100">
+                                <div class="card-body">
+                                    <p class="fw-bolder fs-4">USDT Invested</p>
+                                    <p class="fw-bolder text-end fs-2">{{ request.user.profile.getTotalInvestments|floatformat:2 }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="row">                                
+                                    <div class="col-6">
+                                        <div class="card bg-warning bg-opacity-25 mb-4 border border-warning border-4 border-top-0 border-end-0 border-bottom-0">
+                                            <div class="card-body">
+                                                <p class="fw-bolder fs-5 m-0">Total</p>
+                                                <p class="fw-bolder text-end fs-4 m-0">{{ request.user.profile.getCountOfInvestments }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="card bg-warning bg-opacity-25 mb-4 border border-warning border-4 border-top-0 border-end-0 border-bottom-0">
+                                            <div class="card-body">
+                                                <p class="fw-bolder fs-5 m-0">Completed</p>
+                                                <p class="fw-bolder text-end fs-4 m-0">{{ request.user.profile.getCountOfInvestmentsCompleted }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="card bg-warning bg-opacity-25 mb-4 border border-warning border-4 border-top-0 border-end-0 border-bottom-0">
+                                            <div class="card-body">
+                                                <p class="fw-bolder fs-5 m-0">Unfinished</p>
+                                                <p class="fw-bolder text-end fs-4 m-0">{{ request.user.profile.getCountOfInvestmentsPending }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="card bg-warning bg-opacity-25 mb-4 border border-warning border-4 border-top-0 border-end-0 border-bottom-0">
+                                            <div class="card-body">
+                                                <p class="fw-bolder fs-5 m-0">Earnings</p>
+                                                <p class="fw-bolder text-end fs-4 m-0">USDT {{ request.user.profile.getEarningsByInvestment }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+        
+                                    
+    
+                            </div>
+                            
+                        </div>
+    
+                    </div>
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}" role="alert">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+
+                    <div class="card card-body table-responsive">
+                        <table class="table " id="dataTable" width="100%">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th scope="col" style="width: 10%;">#</th>
+                                    <th scope="col">USDT Amount</th>
+                                    <th scope="col">% Returned</th>
+                                    
+                                    <th scope="col">Earnings</th>
+    
+                                    <th scope="col">Date of investment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for investment in investments %}
+                                <tr>
+                                    <th scope="row">{{ investment.id }}</th>
+                                    <td>{{ investment.amount }}</td>
+                                    <td>{{ investment.percentage_returned }}%</td>
+                                    <td>{{ investment.returns|floatformat:2 }}</td>
+                                    <td>{{ investment.date }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+
+
+            </div>
+        </div>
+    </main>
+
+{% endblock %}

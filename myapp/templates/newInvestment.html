@@ -1,0 +1,103 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<main>
+    <div class="container-fluid px-4">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card border-0 shadow mt-5">
+                    <div class="card-header">
+                        <h3 class="mb-0 text-center">New investment</h3>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="alert alert-warning" role="alert">
+                            <h4 class="alert-heading">Warning!</h4>
+                            <p>Investments are not refundable until after 200 days. Please make sure you are investing
+                                the right amount.</p>
+                        </div>
+
+                        <!-- show aviliable balance -->
+                        <div class="mb-3 text-center">
+                            <h5>Available Balance: </h5>
+                            <span class="fw-bold">USDT {{user.profile.balance}}</span>
+
+
+                        </div>
+
+                        <form action="{% url 'newInvestment' %}" method="POST">
+                            {% csrf_token %}
+                            {% for message in messages %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ message }}
+                            </div>
+                            {% endfor %}
+
+                            <div class="mb-3">
+                                <label for="amount" class="form-label fw-bold">USDT amount to Invest</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="amount" name="amount"
+                                        placeholder="Enter amount" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="input-group justify-content-center">
+                                    <button type="button" class="btn btn-outline-warning text-dark"
+                                        onclick="addAmount(1)">+1</button>
+                                    <button type="button" class="btn btn-outline-warning text-dark"
+                                        onclick="addAmount(5)">+5</button>
+                                    <button type="button" class="btn btn-outline-warning text-dark"
+                                        onclick="addAmount(10)">+10</button>
+                                    <button type="button" class="btn btn-outline-warning text-dark"
+                                        onclick="addAmount(20)">+20</button>
+                                    <button type="button" class="btn btn-outline-warning text-dark"
+                                        onclick="addAmount(50)">+50</button>
+                                    <button type="button" class="btn btn-outline-warning text-dark"
+                                        onclick="addAmount(100)">+100</button>
+                                    <button type="button" class="btn btn-outline-warning text-dark"
+                                        onclick="investAll()">All</button>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-warning me-4">Submit</button>
+                                <a href="{% url 'investments' %}" class="btn btn-secondary">Go Back</a>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</main>
+
+
+
+<script>
+    function addAmount(amount) {
+        var input = document.getElementById("amount");
+        var value = parseInt(input.value);
+        if (!isNaN(value)) {
+            input.value = value + amount;
+        } else {
+            input.value = amount;
+        }
+    }
+
+    function investAll() {
+        var input = document.getElementById("amount");
+        var value = parseInt(input.value);
+        var balance = parseInt("{{user.profile.balance}}");
+        if (!isNaN(value)) {
+            input.value = balance;
+        } else {
+            input.value = balance;
+        }
+    }
+</script>
+
+{% endblock %}
