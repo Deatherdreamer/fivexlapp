@@ -197,10 +197,10 @@ LOGIN_REDIRECT_URL = "/"
 
 
 # set the celery broker url
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_BROKER_URL = 'redis://default:PHHWlgmI7fZxgXKx0tOWN9HGrCxuL04G@redis-12415.c89.us-east-1-3.ec2.cloud.redislabs.com:12415'
   
 # set the celery result backend
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://default:PHHWlgmI7fZxgXKx0tOWN9HGrCxuL04G@redis-12415.c89.us-east-1-3.ec2.cloud.redislabs.com:12415'
   
 # set the celery timezone
 CELERY_TIMEZONE = 'UTC'
@@ -208,11 +208,11 @@ CELERY_TIMEZONE = 'UTC'
 CELERY_BEAT_SCHEDULE = {
     'generate-returns-for-all-investments': {
         'task': 'myapp.tasks.generate_returns_for_all_investments',
-        'schedule': 30.0,
+        'schedule': 3600.0,
     },
     'check-status-of-all-deposits': {
         'task': 'myapp.tasks.check_status_of_all_deposits',
-        'schedule': 30.0,
+        'schedule': 60.0,
     },
     'test-celery': {
         'task': 'myapp.tasks.test_celery',
