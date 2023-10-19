@@ -128,15 +128,18 @@ if LOCAL_DB:
 
 else:
     DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql_psycopg2",
-            "NAME": "df5tgjepe19phg",
-            "USER": "oqxdkzqpfxtfdm",
-            "PASSWORD": "28d16554d4d542db9cc1d2fbb7ea0d62e5b7163335cd66022c42b1c18fa5b8f3",
-            "HOST": "ec2-34-236-103-63.compute-1.amazonaws.com",
-            "PORT": "5432",
-        }
+    'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
     }
+    # DATABASES = {
+    #     "default": {
+    #         "ENGINE": "django.db.backends.postgresql_psycopg2",
+    #         "NAME": "df5tgjepe19phg",
+    #         "USER": "oqxdkzqpfxtfdm",
+    #         "PASSWORD": "28d16554d4d542db9cc1d2fbb7ea0d62e5b7163335cd66022c42b1c18fa5b8f3",
+    #         "HOST": "ec2-34-236-103-63.compute-1.amazonaws.com",
+    #         "PORT": "5432",
+    #     }
+    # }
 
 
 # Password validation
