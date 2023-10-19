@@ -1,6 +1,6 @@
 web: gunicorn bigdatave.wsgi --log-file -
-worker: celery worker --app=bigdatave --loglevel=info
-beat: celery beat --app=bigdatave --loglevel=info
+worker: celery worker --app=fivexlapp --loglevel=info
+beat: celery beat --app=fivexlapp --loglevel=info
 
 
 
