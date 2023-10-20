@@ -90,33 +90,9 @@ WSGI_APPLICATION = "bigdatave.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# if IS_HEROKU_APP:
-#     # In production on Heroku the database configuration is derived from the `DATABASE_URL`
-#     # environment variable by the dj-database-url package. `DATABASE_URL` will be set
-#     # automatically by Heroku when a database addon is attached to your Heroku app. See:
-#     # https://devcenter.heroku.com/articles/provisioning-heroku-postgres
-#     # https://github.com/jazzband/dj-database-url
-#     DATABASES = {
-#         "default": dj_database_url.config(
-#             conn_max_age=600,
-#             conn_health_checks=True,
-#             ssl_require=True,
-#         ),
-#     }
-# else:
-#     # When running locally in development or in CI, a sqlite database file will be used instead
-#     # to simplify initial setup. Longer term it's recommended to use Postgres locally too.
-#     DATABASES = {
-#         "default": {
-#             "ENGINE": "django.db.backends.sqlite3",
-#             "NAME": BASE_DIR / "db.sqlite3",
-#         }
-#     }
-
-# COINBASE_COMMERCE_API_KEY = "02376cd4-bd2b-4287-b30f-c1be9b621c76"
 KODEXPAY_API_KEY = 'b5f6aec2-9f97-4629-a30d-fa20ab28c2a3'
 
-LOCAL_DB = False
+LOCAL_DB = True
 
 if LOCAL_DB:
     DATABASES = {
@@ -130,16 +106,6 @@ else:
     DATABASES = {
     'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
     }
-    # DATABASES = {
-    #     "default": {
-    #         "ENGINE": "django.db.backends.postgresql_psycopg2",
-    #         "NAME": "df5tgjepe19phg",
-    #         "USER": "oqxdkzqpfxtfdm",
-    #         "PASSWORD": "28d16554d4d542db9cc1d2fbb7ea0d62e5b7163335cd66022c42b1c18fa5b8f3",
-    #         "HOST": "ec2-34-236-103-63.compute-1.amazonaws.com",
-    #         "PORT": "5432",
-    #     }
-    # }
 
 
 # Password validation
@@ -216,11 +182,11 @@ CELERY_BEAT_SCHEDULE = {
     'check-status-of-all-deposits': {
         'task': 'myapp.tasks.check_status_of_all_deposits',
         'schedule': 60.0,
-    },
-    'test-celery': {
-        'task': 'myapp.tasks.test_celery',
-        'schedule': 30.0,
     }
+    # 'test-celery': {
+    #     'task': 'myapp.tasks.test_celery',
+    #     'schedule': 30.0,
+    # }
 }
 
 
