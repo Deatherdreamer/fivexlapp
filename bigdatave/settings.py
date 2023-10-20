@@ -33,7 +33,7 @@ IS_HEROKU_APP = "DYNO" in os.environ and not "CI" in os.environ
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = False
+DEBUG = not IS_HEROKU_APP
 
 ALLOWED_HOSTS = ["*"]
 
@@ -94,7 +94,7 @@ KODEXPAY_API_KEY = 'b5f6aec2-9f97-4629-a30d-fa20ab28c2a3'
 
 LOCAL_DB = True
 
-if LOCAL_DB:
+if IS_HEROKU_APP:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
